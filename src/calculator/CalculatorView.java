@@ -23,7 +23,7 @@ public class CalculatorView extends JFrame
         setTitle("Calculator");
         setLocationRelativeTo(null);
         setVisible(true);
-        setMinimumSize(new Dimension(180, 280));
+        setMinimumSize(new Dimension(200, 280));
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -35,6 +35,13 @@ public class CalculatorView extends JFrame
         gbc.gridwidth = 4;
         opHistory = OperationHistory.getInstance();
         add(opHistory, gbc);
+
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+//        gbc.fill = GridBagConstraints.VERTICAL;
+        JScrollPane scroll = new JScrollPane(opHistory);
+        scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        add(scroll, gbc);
 
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.gridx = 0;
@@ -117,9 +124,11 @@ public class CalculatorView extends JFrame
         SpecialButton eb = new SpecialButton("=", () -> {
             Display d = Display.getInstance();
             OperationHistory oh = OperationHistory.getInstance();
-            oh.setText(oh.getText() + "\n" + Model.first + " " +
+            String answer = Model.first + " " +
                     Model.operation + " " + d.getText() + " = " +
-                    Model.calculate(Double.parseDouble(d.getText())));
+                    Model.calculate(Double.parseDouble(d.getText()));
+            answer = (oh.getText() == "") ? answer : oh.getText() + "\n" + answer;
+            oh.setText(answer);
             d.setText("0");
         });
         addButton(eb, gbc, row, 2, 1, 1);

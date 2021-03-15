@@ -9,7 +9,6 @@ import static javax.swing.SwingConstants.RIGHT;
 public class OperationHistory extends JTextPane
 {
     private static OperationHistory instance;
-    private JScrollPane scroll;
 
     public static OperationHistory getInstance()
     {
@@ -22,9 +21,7 @@ public class OperationHistory extends JTextPane
     private OperationHistory()
     {
         super();
-//        setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         setFont(new Font("Lato", Font.PLAIN, 18));
         setEditable(false);
-        scroll = new JScrollPane(this);
     }
 }
